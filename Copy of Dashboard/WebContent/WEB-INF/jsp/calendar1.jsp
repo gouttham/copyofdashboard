@@ -37,61 +37,81 @@ function aj()
 
 
 </script>
-</head>
-<body>
 
-<!-- 
-<div id="event"> -->
-<script>
 
-$(document).ready(function() {
-
-    var calendar = $('#calendar').fullCalendar({
-    
-    editable: true,
-      selectable: true,
-    //header and other values
-    select: function(start) {
-    	
-    	//alert("ngfkdj");
-      //  endtime = $.fullCalendar.formatDate(end,'h:mm tt');
-       starttime =moment(start).format('MM/DD/YYYY');
-      //  var mywhen = starttime + ' - ' + endtime;
-    
-        $('#createEventModal #startDate').val(starttime);
-       /*  $('#createEventModal #apptEndTime').val(end);
-        $('#createEventModal #apptAllDay').val(allDay);
-        $('#createEventModal #when').text(mywhen); */
-        $('#createEventModal').modal('show');
-     }
-  });
+<script type="text/javascript">
+function aj() {
+	 
     
     
+    $.ajax({
+	
+		        type: "POST",
+		
+		        url: "topopulateaddevent.html",
+	
+		        success:
+		        	function(response){
+		
+		        // we have the response
+		
+		        $('#event').html(response);
+		
+		       
+		 }
+	
+	     });
 
-$('#submitButton').on('click', function(e){
-  // We don't want this to act as a link so cancel the link action
-  e.preventDefault();
-var eventName=document.getElementById("eventName").value;
-var startDate=document.getElementById("startDate").value;
-var endDate=document.getElementById("endDate").value;
-alert(eventName);
-doAjaxPost(eventName,startDate,endDate);
+       }
+       
+       
+       
+       
+function fu()
+{
+	alert("ok");
+	var eventName=document.getElementById("eventName").value;
+	var startDate=document.getElementById("startDate").value;
+	var endDate=document.getElementById("endDate").value;
+	alert(eventName);
+	doAjaxPost(eventName,startDate,endDate);
+	}
 
-});
-});
 </script>
 
-<script>
+</head>
+<body onload="aj();">
 
+
+
+
+
+
+<div id="event" >
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
 function doAjaxPost(eventName,startDate,endDate){
-	
 	$.ajax({
 		type:"Post",
 		url:"addEvent1.html",
 		data:"&eventName="+eventName+"&startDate="+startDate+"&endDate="+endDate,
-		
 		success:
-			
 			function(response){
 			document.getElementById("status").value=response;
 			if(document.getElementById("status").value==="success"){
@@ -105,41 +125,27 @@ function doAjaxPost(eventName,startDate,endDate){
 		},
 		error: function(e){
 			alert('Error:'+e);
-		}
-	});
-} 
-
+		}});} 
 	function doSubmit(){
-		//alert("nnn");
 	  $("#createEventModal").modal('hide');
-	 
-	  alert("form submitted");
-	      
+	  alert("form submitted");   
 	  $("#calendar").fullCalendar('renderEvent',
 	      {
-		  
 	          title: $('#eventName').val(),
-	          /* start: new Date($('#apptStartTime').val()),
-	          end: new Date($('#apptEndTime').val()),
-	          allDay: ($('#apptAllDay').val() == "true"), */
 	          start: new Date($('#startDate').val()),
 				end: new Date($('#endDate').val()),
 				allDay:true
-	         
 	      },
 	      true);
 	  alert(" kkkk");
 	      
 	 }
-
-	
-	
 </script>
+
+
+
+
 <div id="calendar"></div>
-
-
-
-
 <div id="createEventModal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
     
     <div class="modal-header">
@@ -154,42 +160,23 @@ function doAjaxPost(eventName,startDate,endDate){
     <form:form id="createEvent" modelAttribute="addEvent" mclass="form-horizontal" >
     
          <div class="control-group">
-         
-         
            <label class="control-label" for="event">Event:</label>
-           
               <form:input type="text" path="event" id="eventName"></form:input>
-           
-           
         </div>
         	<div class="control-group">
           	 	 <label class="control-label" for="startDate">Start date:</label>
           	 	<form:input type="text" path="startDate" id="startDate"></form:input>
        		 </div>
-       		 
-       		 
        		 <div class="control-group">
            		 <label class="control-label" for="endDate">End date:</label>
-             
-              <form:input type="text" path="endDate" id="endDate"></form:input>
-           
-            
-        </div>
-         
+              <form:input type="text" path="endDate" id="endDate"></form:input>         
+        </div>     
     </form:form>
-   
     </div>
-    
-    
-    
-    
     <div class="modal-footer">
         <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-        <button type="submit" class="btn btn-primary" id="submitButton">Save</button>
+        <button type="submit" class="btn btn-primary" id="submitButton" onclick="fu();">Save</button>
     </div>
 </div> 
-
-
-
 </body>
 </html>

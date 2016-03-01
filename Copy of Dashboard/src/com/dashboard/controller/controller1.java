@@ -113,7 +113,7 @@ public class controller1
 		tb.setStartDate(new java.sql.Date(stdt1.getTime()));
 		tb.setEndDate(new java.sql.Date(edt1.getTime()));
 		tb.setSkillId(201);
-		tb.setCourseId("3031");
+		tb.setCourseId("31");
 		tb.setTrainerId("111");
 		String event=(String) request.getParameter("eventName");
 		System.out.println(event);
@@ -131,7 +131,7 @@ public class controller1
 		}
 	
 	@RequestMapping(value="/topopulate",method=RequestMethod.POST)
-	public @ResponseBody String getResponse(HttpServletRequest request,HttpServletResponse response) throws Exception{
+	public @ResponseBody String topopulate(HttpServletRequest request,HttpServletResponse response) throws Exception{
 		System.out.println("in ajax");
         String result = "";
         result = result  + "<script>";
@@ -164,6 +164,52 @@ public class controller1
 		
 	}
 	
+	
+	@RequestMapping(value="/topopulateaddevent",method=RequestMethod.POST)
+	public @ResponseBody String topopulateaddevent(HttpServletRequest request,HttpServletResponse response) throws Exception
+	{
+		System.out.println("in ajax");
+       String result = "";
+        result = result  + "<script>";
+        result = result  + "$(document).ready(function() {";
+        
+        
+        result = result  + "$('#calendar').fullCalendar({";
+        result = result  + "header: {";
+        result = result  + "left: 'prev,next today',";
+        result = result  + "center: 'title',";
+        result = result  + "right: 'month,basicWeek,basicDay'";
+        result = result  + "},";
+        result = result  + "defaultDate: '2016-01-12',";
+        result = result  + "editable: false,";
+        result = result  + "eventLimit: true,";
+        result = result  + "selectable: true,";
+        
+        result = result  + "select: function(start) {";
+        result = result  + "starttime =moment(start).format('MM/DD/YYYY');";
+        result = result  + "$('#createEventModal #startDate').val(starttime);";
+        result = result  + "$('#createEventModal').modal('show');";
+        result = result  + "},";
+        result = result  + "events: [";
+		Connection Conn = DBUtill.getDBConnection();
+		PreparedStatement pre = Conn
+				.prepareStatement("SELECT * FROM dd.db_trainer");
+		ResultSet res = pre.executeQuery();
+		while (res.next()) {
+			
+			result = result  + "{title:'"+res.getString(6)+"',start: '"+res.getDate(5)+"',end:'"+res.getDate(2)+"'},";
+		}
+		 result = result  + "]";
+		 result = result  + "});";
+		 
+		 
+
+		 
+	     result = result  + "});";
+		result = result  + "</script> ";
+		return result;
+		
+	}
 	
 	@RequestMapping(value="/calendar",method=RequestMethod.GET)
 	public String calendar(Model model,HttpServletRequest request)
