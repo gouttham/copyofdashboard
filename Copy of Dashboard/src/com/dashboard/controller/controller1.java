@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.dashboard.beans.ScheduleBean;
 import com.dashboard.beans.TrainerBean;
 import com.dashboard.service.Trainer;
 //import com.google.gson.Gson;
@@ -46,16 +47,8 @@ public class controller1
 	@RequestMapping(value="/addEvent",method=RequestMethod.GET)
 	public String addEvent(Model model,HttpServletRequest request)
 	{
-		System.out.println("addevent");
 		TrainerBean trainerBean=new TrainerBean();
-	//	ArrayList<TrainerBean> trainerBeans=new ArrayList<TrainerBean>();
-		System.out.println("size..");
-		//System.out.println(trainer.viewAllSchedule("111").size());
-		//request.setAttribute("trainerbeans",trainer.viewAllSchedule("111"));
-		model.addAttribute("addEvent",trainerBean);
-		System.out.println("controller...");
-		
-		
+		model.addAttribute("addEvent",trainerBean);		
 		return "calendar1";
 	}
 	
@@ -147,6 +140,19 @@ public class controller1
         result = result  + "eventLimit: true,";
         result = result  + "selectable: true,";
         
+        
+        
+       
+        
+        
+            
+            
+            
+            
+        
+        
+        
+        
         result = result  + "events: [";
 		Connection Conn = DBUtill.getDBConnection();
 		PreparedStatement pre = Conn
@@ -156,7 +162,16 @@ public class controller1
 			
 			result = result  + "{title:'"+res.getString(6)+"',start: '"+res.getDate(5)+"',end:'"+res.getDate(2)+"'},";
 		}
-		 result = result  + "]";
+		 result = result  + "],";
+		 
+		 result = result + "eventClick: function(event){";
+		 result = result  + "starttime =(event.start).format('MM/DD/YYYY');";
+		 result = result  + "if(event.end!="+"null"+"){endtime =(event.end).format('MM/DD/YYYY');}else{endtime =(event.start).format('MM/DD/YYYY');}";
+	       result = result  + "$('#createEventModal #startDate').val(starttime);";
+	       result = result  + "$('#createEventModal #endDate').val(endtime);";
+	       result = result  + "$('#createEventModal #eventName').val(event.title);";
+	        result = result  + "$('#createEventModal').modal('show');";
+		 result = result + "}";
 		 result = result  + "});";
 	     result = result  + "});";
 		result = result  + "</script> ";
@@ -168,7 +183,7 @@ public class controller1
 	@RequestMapping(value="/topopulateaddevent",method=RequestMethod.POST)
 	public @ResponseBody String topopulateaddevent(HttpServletRequest request,HttpServletResponse response) throws Exception
 	{
-		System.out.println("in ajax");
+		System.out.println("in ajax topopulateaddevent");
        String result = "";
         result = result  + "<script>";
         result = result  + "$(document).ready(function() {";
@@ -214,7 +229,6 @@ public class controller1
 	@RequestMapping(value="/calendar",method=RequestMethod.GET)
 	public String calendar(Model model,HttpServletRequest request)
 	{
-	
 		return "calendar";
 	}
 }

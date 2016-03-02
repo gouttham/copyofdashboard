@@ -12,8 +12,9 @@ public class ScheduleBean {
 
 	@Id
 	private int scheduleId;
-	private int courseId;
+	private int courseId;	
 	
+
 	@OneToOne
 	@JoinColumn(name="studentId")
 	private CredentialBean studentId;

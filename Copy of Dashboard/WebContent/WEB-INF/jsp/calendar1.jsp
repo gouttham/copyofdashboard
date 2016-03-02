@@ -28,15 +28,7 @@
 	}
 
 </style>
-<script type="text/javascript">
-function aj()
-{
-	alert("ajax success...");
-	document.getElementById("event").innerHTML = "<h2>helloone</h2>";
-}
 
-
-</script>
 
 
 <script type="text/javascript">
