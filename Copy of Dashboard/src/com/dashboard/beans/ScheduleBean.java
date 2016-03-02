@@ -1,10 +1,13 @@
 package com.dashboard.beans;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
 
 @Entity
 @Table(name="db_schedule")
@@ -15,9 +18,9 @@ public class ScheduleBean {
 	private int courseId;	
 	
 
-	@OneToOne
+	@OneToOne(targetEntity = CredentialBean.class)
 	@JoinColumn(name="studentId")
-	private CredentialBean studentId;
+	private String studentId;
 	
 	private int completionStatus;
 	public int getScheduleId() {
@@ -33,10 +36,12 @@ public class ScheduleBean {
 		this.courseId = courseId;
 	}
 	
-	public CredentialBean getStudentId() {
+	
+
+	public String getStudentId() {
 		return studentId;
 	}
-	public void setStudentId(CredentialBean studentId) {
+	public void setStudentId(String studentId) {
 		this.studentId = studentId;
 	}
 	public int getCompletionStatus() {

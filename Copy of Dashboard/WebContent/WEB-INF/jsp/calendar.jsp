@@ -56,10 +56,49 @@ function aj() {
        
        
        
+function fu()
+{
+	var eventName=document.getElementById("eventName").value;
+	var startDate=document.getElementById("startDate").value;
+	var endDate=document.getElementById("endDate").value;
+	doAjaxPost(eventName,startDate,endDate);
+	}
        
        
-       
-       
+function doAjaxPost(eventName,startDate,endDate){
+	$.ajax({
+		type:"Post",
+		url:"fixschedule1.html",
+		data:"&eventName="+eventName+"&startDate="+startDate+"&endDate="+endDate,
+		success:
+			function(response){
+			document.getElementById("status").value=response;
+			if(document.getElementById("status").value==="success"){
+				alert(response);
+				doSubmit();
+			}
+			
+			else{
+				alert("error");
+			}
+		},
+		error: function(e){
+			alert('Error:'+e);
+		}});} 
+	function doSubmit(){
+	  $("#createEventModal").modal('hide');
+	  alert("form submitted");   
+	  $("#calendar").fullCalendar('renderEvent',
+	      {
+	          title: $('#eventName').val(),
+	          start: new Date($('#startDate').val()),
+				end: new Date($('#endDate').val()),
+				allDay:true
+	      },
+	      true);
+	  alert(" kkkk");
+	      
+	 }    
 
 </script>
 </head>

@@ -34,6 +34,9 @@
 	<bean id="trainer" class="com.dashboard.service.TrainerImp"></bean>
 	<bean id="trainerDAO" class="com.dashboard.dao.TrainerDAOImpl"></bean> 
 	
+	<bean id="student" class="com.dashboard.service.StudentImp"></bean>
+	<bean id="studentDAO" class="com.dashboard.dao.StudentDAOImpl"></bean> 
+	
 	<!-- <bean id="registerinterface" class="com.wipro.service.register"></bean> 
 	<bean id="registerdaointerface" class="com.wipro.dao.registerdao"></bean> 
 	

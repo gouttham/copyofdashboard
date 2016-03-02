@@ -22,8 +22,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.dashboard.beans.CredentialBean;
 import com.dashboard.beans.ScheduleBean;
 import com.dashboard.beans.TrainerBean;
+import com.dashboard.service.Student;
 import com.dashboard.service.Trainer;
 //import com.google.gson.Gson;
 import com.dashboard.utill.*;
@@ -36,6 +38,8 @@ public class controller1
 {
 	@Autowired
 	Trainer trainer;
+	@Autowired
+	Student student;
 	
 	/*@RequestMapping(method=RequestMethod.GET)
 	public String getvalues()
@@ -123,6 +127,79 @@ public class controller1
 			return "fail";}
 		}
 	
+	
+	@RequestMapping(value="/fixschedule1",method=RequestMethod.POST)
+	public @ResponseBody String fixschedule1(HttpServletRequest request) throws Exception
+	{
+		ScheduleBean sb = new ScheduleBean();
+		String StudentId = "studentcheck1";//*************student id from session tot be added*************
+		int scheduleid = 100;
+		Date stdt1=new Date();
+		Date edt1=new Date();
+		String event=(String) request.getParameter("eventName");
+		SimpleDateFormat sdf=new SimpleDateFormat("MM/dd/yyyy");
+		String stdt=request.getParameter("startDate");
+		String edt=request.getParameter("endDate");
+		try {
+			stdt1=sdf.parse(stdt);
+			edt1=sdf.parse(edt);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		java.sql.Date sqlstdt1Date = new java.sql.Date(stdt1.getTime());
+		java.sql.Date sqledt1Date = new java.sql.Date(edt1.getTime());
+
+		Connection Conn = DBUtill.getDBConnection();
+		PreparedStatement pre = Conn.prepareStatement("select courseId from dd.db_Trainer where startDate=? and endDate=? and event=?");
+		pre.setDate(1,sqlstdt1Date);
+		pre.setDate(2,sqledt1Date);
+		pre.setString(3, event);
+		ResultSet rs = pre.executeQuery();
+		int courseId = 0;
+		while(rs.next())
+		{
+			System.out.println(rs.getString(1));
+			courseId = rs.getInt(1);
+		}
+		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+courseId);
+		sb.setScheduleId(scheduleid);
+		sb.setCompletionStatus(0);
+		sb.setCourseId(courseId);
+		System.out.println(StudentId);
+		sb.setStudentId(StudentId);
+		
+		if(student.addEvent(sb).equalsIgnoreCase("success"))
+		{
+			return "success";
+		}
+		else
+		{
+			return "failure";
+		}
+		
+		
+		/*now create query to access the course id from db usinf sd ed and event name get the course id and set it to schedule bean here
+		tb.setStartDate(new java.sql.Date(stdt1.getTime()));
+		tb.setEndDate(new java.sql.Date(edt1.getTime()));
+		tb.setSkillId(201);
+		tb.setCourseId("31");
+		tb.setTrainerId("111");
+		System.out.println(event);
+		tb.setTitle(event);
+		System.out.println("aftersubmission");
+		
+		if(trainer.addEvent(tb).equalsIgnoreCase("success")){
+		
+		return "success";
+		
+		}
+		else{
+			
+			return "fail";}*/
+		}
+	
+	
 	@RequestMapping(value="/topopulate",method=RequestMethod.POST)
 	public @ResponseBody String topopulate(HttpServletRequest request,HttpServletResponse response) throws Exception{
 		System.out.println("in ajax");
@@ -139,20 +216,6 @@ public class controller1
         result = result  + "editable: false,";
         result = result  + "eventLimit: true,";
         result = result  + "selectable: true,";
-        
-        
-        
-       
-        
-        
-            
-            
-            
-            
-        
-        
-        
-        
         result = result  + "events: [";
 		Connection Conn = DBUtill.getDBConnection();
 		PreparedStatement pre = Conn

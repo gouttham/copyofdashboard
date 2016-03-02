@@ -2,6 +2,7 @@ package com.dashboard.beans;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -11,16 +12,17 @@ import javax.persistence.Table;
 public class CredentialBean {
 
 	@Id
-	private String employeeId;
+	private String pId;
 	private String password;
 	private String status;
 	private char type;
 	
-	public String getEmployeeId() {
-		return employeeId;
+	
+	public String getpId() {
+		return pId;
 	}
-	public void setEmployeeId(String employeeId) {
-		this.employeeId = employeeId;
+	public void setpId(String pId) {
+		this.pId = pId;
 	}
 	public String getPassword() {
 		return password;
