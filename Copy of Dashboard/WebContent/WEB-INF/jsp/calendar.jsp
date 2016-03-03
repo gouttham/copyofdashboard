@@ -74,7 +74,6 @@ function doAjaxPost(eventName,startDate,endDate){
 			function(response){
 			document.getElementById("status").value=response;
 			if(document.getElementById("status").value==="success"){
-				alert(response);
 				doSubmit();
 			}
 			
@@ -88,15 +87,14 @@ function doAjaxPost(eventName,startDate,endDate){
 	function doSubmit(){
 	  $("#createEventModal").modal('hide');
 	  alert("form submitted");   
-	  $("#calendar").fullCalendar('renderEvent',
+	 /*  $("#calendar").fullCalendar('renderEvent',
 	      {
 	          title: $('#eventName').val(),
 	          start: new Date($('#startDate').val()),
 				end: new Date($('#endDate').val()),
 				allDay:true
 	      },
-	      true);
-	  alert(" kkkk");
+	      true); */
 	      
 	 }    
 
@@ -104,6 +102,7 @@ function doAjaxPost(eventName,startDate,endDate){
 </head>
 <body   onload="aj();">
 
+<input type="hidden" id="status" value="Fix Schedule"readonly="readonly">
 
 <div id="event">
 </div>
