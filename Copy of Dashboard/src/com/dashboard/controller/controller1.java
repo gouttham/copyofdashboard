@@ -133,7 +133,6 @@ public class controller1
 	{
 		ScheduleBean sb = new ScheduleBean();
 		String StudentId = "200";//*************student id from session tot be added*************
-		int scheduleid = 100;
 		Date stdt1=new Date();
 		Date edt1=new Date();
 		String event=(String) request.getParameter("eventName");
@@ -167,7 +166,6 @@ public class controller1
 			courseId = rs.getString(1);
 		}
 		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+courseId);
-		sb.setScheduleId(scheduleid);
 		sb.setCompletionStatus(0);
 		sb.setCourseId(courseId);
 		

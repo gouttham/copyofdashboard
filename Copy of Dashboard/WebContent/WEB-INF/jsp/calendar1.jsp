@@ -61,11 +61,9 @@ function aj() {
        
 function fu()
 {
-	alert("ok");
 	var eventName=document.getElementById("eventName").value;
 	var startDate=document.getElementById("startDate").value;
 	var endDate=document.getElementById("endDate").value;
-	alert(eventName);
 	doAjaxPost(eventName,startDate,endDate);
 	}
 
@@ -74,6 +72,7 @@ function fu()
 </head>
 <body onload="aj();">
 
+<input type="hidden" id="status" value="Fix Schedule"readonly="readonly">
 
 
 
@@ -121,15 +120,14 @@ function doAjaxPost(eventName,startDate,endDate){
 	function doSubmit(){
 	  $("#createEventModal").modal('hide');
 	  alert("form submitted");   
-	  $("#calendar").fullCalendar('renderEvent',
+	  /* $("#calendar").fullCalendar('renderEvent',
 	      {
 	          title: $('#eventName').val(),
 	          start: new Date($('#startDate').val()),
 				end: new Date($('#endDate').val()),
 				allDay:true
 	      },
-	      true);
-	  alert(" kkkk");
+	      true); */
 	      
 	 }
 </script>
@@ -152,8 +150,8 @@ function doAjaxPost(eventName,startDate,endDate){
     <form:form id="createEvent" modelAttribute="addEvent" mclass="form-horizontal" >
     
          <div class="control-group">
-           <label class="control-label" for="event">Event:</label>
-              <form:input type="text" path="event" id="eventName"></form:input>
+           <label class="control-label" for="title">Event:</label>
+              <form:input type="text" path="title" id="eventName"></form:input>
         </div>
         	<div class="control-group">
           	 	 <label class="control-label" for="startDate">Start date:</label>

@@ -3,6 +3,7 @@ package com.dashboard.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,36 +23,41 @@ public class StudentDAOImpl implements StudentDAO {
 	public String addSchedule(String studentId,ScheduleBean sb) {
 		
 		Connection Conn;
-		try 
-		{
-			Conn = DBUtill.getDBConnection();
-			String pId = studentId;
-			System.out.println("before insertaion into the db........");
-			System.out.println(sb.getCompletionStatus());
-			System.out.println(sb.getCourseId());
-			System.out.println(sb.getScheduleId());
-			System.out.println(pId);
-			Session session = sessionFactory.getCurrentSession();
-			CredentialBean cb = (CredentialBean) session.get(CredentialBean.class, pId);
-			System.out.println(cb.getPassword());
-			System.out.println(cb.getpId());
-			System.out.println(cb.getStatus());
-			System.out.println(cb.getType());
-			sb.setStudentId(cb);
-			int scheduleId=(int) session.save(sb);
+		
+			try {
+				Conn = DBUtill.getDBConnection();
+				String pId = studentId;
+				String cId = sb.getCourseId();
+				String Sid =pId+cId; 
+				sb.setScheduleId(Sid);
+				System.out.println("before insertaion into the db........");
+				System.out.println(sb.getCompletionStatus());
+				System.out.println(sb.getCourseId());
+				System.out.println(sb.getScheduleId());
+				System.out.println(pId);
+				Session session = sessionFactory.getCurrentSession();
+				CredentialBean cb = (CredentialBean) session.get(CredentialBean.class, pId);
+				System.out.println(cb.getPassword());
+				System.out.println(cb.getpId());
+				System.out.println(cb.getStatus());
+				System.out.println(cb.getType());
+				sb.setStudentId(cb);
+				String scheduleId=(String) session.save(sb);
 
-			if(scheduleId==0){
+				if(scheduleId.isEmpty()){
+					return "failure";
+				}
+				else{
+				return "Success";
+				}
+			} catch (HibernateException e) {
+				// TODO Auto-generated catch block
+				return "failure";
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
 				return "failure";
 			}
-			else{
-			return "Success";
-			}
-		} 
-		catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return "failure";
+		
 
 		
 		

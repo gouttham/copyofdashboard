@@ -4,6 +4,8 @@ import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
@@ -14,7 +16,7 @@ import javax.persistence.Table;
 public class ScheduleBean {
 
 	@Id
-	private int scheduleId;
+	private String scheduleId;
 	private String courseId;
 	private Date updatedOn;
 	private String updatedBy;
@@ -24,14 +26,14 @@ public class ScheduleBean {
 	private CredentialBean studentId;
 	
 	private int completionStatus;
-	public int getScheduleId() {
+	
+	
+	public String getScheduleId() {
 		return scheduleId;
 	}
-	public void setScheduleId(int scheduleId) {
+	public void setScheduleId(String scheduleId) {
 		this.scheduleId = scheduleId;
 	}
-	
-	
 	public String getCourseId() {
 		return courseId;
 	}

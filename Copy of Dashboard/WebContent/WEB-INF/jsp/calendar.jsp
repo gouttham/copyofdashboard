@@ -87,24 +87,22 @@ function doAjaxPost(eventName,startDate,endDate){
 		}});} 
 	function doSubmit(){
 	  $("#createEventModal").modal('hide');
-	  alert("form submitted");   
-	  $("#calendar").fullCalendar('renderEvent',
+	  /*  $("#calendar").fullCalendar('renderEvent',
 	      {
 	          title: $('#eventName').val(),
-	          start: new Date($('#startDate').val()),
-				end: new Date($('#endDate').val()),
+	         start: new Date($('#startDate').val()),
+			end: new Date($('#endDate').val()),
+			
 				allDay:true
 	      },
-	      true);
-	  alert(" kkkk");
+	      true); */
 	      
 	 }    
 
 </script>
 </head>
 <body   onload="aj();">
-
-
+<input type="hidden" id="status" value="Fix Schedule"readonly="readonly">
 <div id="event">
 </div>
 <div id='calendar'></div>

@@ -16,13 +16,7 @@ public class TrainerBean {
 	private Date startDate;
 	private Date endDate;
 	private String title;
-private String event;
-	public String getEvent() {
-	return event;
-}
-public void setEvent(String event) {
-	this.event = event;
-}
+	
 	public String getTitle() {
 		return title;
 	}
