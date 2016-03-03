@@ -16,8 +16,8 @@ public class StudentImp implements Student {
 	StudentDAO studentDAO;
 	
 	@Override
-	public String addEvent(ScheduleBean sb) {
-		return studentDAO.addSchedule(sb);
+	public String addEvent(String studentId,ScheduleBean sb) {
+		return studentDAO.addSchedule(studentId,sb);
 	}
 
 }

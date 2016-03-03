@@ -976,26 +976,26 @@ a.fc-more:hover {
 /* TimeGrid Event Containment
 --------------------------------------------------------------------------------------------------*/
 
-.fc-ltr .fc-time-grid .fc-event-container { /* space on the sides of events for LTR (default) */
+ .fc-ltr .fc-time-grid .fc-event-container { space on the sides of events for LTR (default)
 	margin: 0 2.5% 0 2px;
 }
 
-.fc-rtl .fc-time-grid .fc-event-container { /* space on the sides of events for RTL */
+.fc-rtl .fc-time-grid .fc-event-container { space on the sides of events for RTL
 	margin: 0 2px 0 2.5%;
 }
 
 .fc-time-grid .fc-event,
 .fc-time-grid .fc-bgevent {
 	position: absolute;
-	z-index: 1; /* scope inner z-index's */
+	z-index: 1; scope inner z-index's
 }
 
 .fc-time-grid .fc-bgevent {
-	/* background events always span full width */
+	background events always span full width
 	left: 0;
 	right: 0;
 }
-
+ 
 
 /* Generic Vertical Event
 --------------------------------------------------------------------------------------------------*/
@@ -1121,4 +1121,8 @@ be a descendant of the grid when it is being dragged.
 	border-width: 5px 6px 5px 0;
 	border-top-color: transparent;
 	border-bottom-color: transparent;
+}
+
+.fc-time {
+    display:none;
 }

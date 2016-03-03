@@ -6,52 +6,56 @@ import java.sql.PreparedStatement;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.dashboard.beans.CredentialBean;
 import com.dashboard.beans.ScheduleBean;
 import com.dashboard.utill.DBUtill;
 
 public class StudentDAOImpl implements StudentDAO {
 	@Autowired
 	SessionFactory sessionFactory;
+	@Transactional(propagation=Propagation.REQUIRED,readOnly=false)
+
 	@Override
-	public String addSchedule(ScheduleBean sb) {
+	public String addSchedule(String studentId,ScheduleBean sb) {
 		
 		Connection Conn;
 		try 
 		{
 			Conn = DBUtill.getDBConnection();
+			String pId = studentId;
 			System.out.println("before insertaion into the db........");
 			System.out.println(sb.getCompletionStatus());
 			System.out.println(sb.getCourseId());
 			System.out.println(sb.getScheduleId());
-			System.out.println(sb.getStudentId());
-			
-			PreparedStatement pre = Conn
-					.prepareStatement("INSERT INTO dd.db_schedule ( scheduleId, completionStatus,courseId,studentId) VALUES (?,?,?,?);");
-			pre.setInt(1, sb.getScheduleId());
-			pre.setInt(2, sb.getCompletionStatus());
-			pre.setInt(3, sb.getCourseId());
-			pre.setString(4, sb.getStudentId());
-			pre.execute();
-			pre.close();
-			Conn.close();
+			System.out.println(pId);
+			Session session = sessionFactory.getCurrentSession();
+			CredentialBean cb = (CredentialBean) session.get(CredentialBean.class, pId);
+			System.out.println(cb.getPassword());
+			System.out.println(cb.getpId());
+			System.out.println(cb.getStatus());
+			System.out.println(cb.getType());
+			sb.setStudentId(cb);
+			int scheduleId=(int) session.save(sb);
+
+			if(scheduleId==0){
+				return "failure";
+			}
+			else{
+			return "Success";
+			}
 		} 
 		catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return "failure";
+
 		
-		
-		Session s=sessionFactory.getCurrentSession();
 		
 
-		int scheduleId = (int) s.save(sb);
-		if(scheduleId==0){
-			return "failure";
-		}
-		else{
-		return "Success";
-		}
 	}
 
 }

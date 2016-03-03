@@ -111,7 +111,7 @@ public class controller1
 		tb.setEndDate(new java.sql.Date(edt1.getTime()));
 		tb.setSkillId(201);
 		tb.setCourseId("31");
-		tb.setTrainerId("111");
+		tb.setTrainerId("100");
 		String event=(String) request.getParameter("eventName");
 		System.out.println(event);
 		tb.setTitle(event);
@@ -132,7 +132,7 @@ public class controller1
 	public @ResponseBody String fixschedule1(HttpServletRequest request) throws Exception
 	{
 		ScheduleBean sb = new ScheduleBean();
-		String StudentId = "studentcheck1";//*************student id from session tot be added*************
+		String StudentId = "200";//*************student id from session tot be added*************
 		int scheduleid = 100;
 		Date stdt1=new Date();
 		Date edt1=new Date();
@@ -151,25 +151,28 @@ public class controller1
 		java.sql.Date sqledt1Date = new java.sql.Date(edt1.getTime());
 
 		Connection Conn = DBUtill.getDBConnection();
-		PreparedStatement pre = Conn.prepareStatement("select courseId from dd.db_Trainer where startDate=? and endDate=? and event=?");
+		System.out.println(sqlstdt1Date);
+		System.out.println(sqledt1Date);
+		System.out.println(event);
+
+		PreparedStatement pre = Conn.prepareStatement("select courseId from dd.db_Trainer where startDate=? and endDate=? and title=?");
 		pre.setDate(1,sqlstdt1Date);
 		pre.setDate(2,sqledt1Date);
 		pre.setString(3, event);
 		ResultSet rs = pre.executeQuery();
-		int courseId = 0;
+		String courseId = null;
 		while(rs.next())
 		{
 			System.out.println(rs.getString(1));
-			courseId = rs.getInt(1);
+			courseId = rs.getString(1);
 		}
 		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+courseId);
 		sb.setScheduleId(scheduleid);
 		sb.setCompletionStatus(0);
 		sb.setCourseId(courseId);
-		System.out.println(StudentId);
-		sb.setStudentId(StudentId);
 		
-		if(student.addEvent(sb).equalsIgnoreCase("success"))
+		
+		if(student.addEvent(StudentId,sb).equalsIgnoreCase("success"))
 		{
 			return "success";
 		}
@@ -223,7 +226,7 @@ public class controller1
 		ResultSet res = pre.executeQuery();
 		while (res.next()) {
 			
-			result = result  + "{title:'"+res.getString(6)+"',start: '"+res.getDate(5)+"',end:'"+res.getDate(2)+"'},";
+			result = result  + "{title:'"+res.getString("title")+"',start:'"+res.getDate("startDate")+"',end:'"+res.getDate("endDate")+"T12:00:00'},";
 		}
 		 result = result  + "],";
 		 
@@ -274,8 +277,10 @@ public class controller1
 				.prepareStatement("SELECT * FROM dd.db_trainer");
 		ResultSet res = pre.executeQuery();
 		while (res.next()) {
-			
-			result = result  + "{title:'"+res.getString(6)+"',start: '"+res.getDate(5)+"',end:'"+res.getDate(2)+"'},";
+			System.out.println(res.getDate("startDate"));
+			System.out.println(res.getDate("endDate"));
+
+			result = result  + "{title:'"+res.getString("title")+"',start:'"+res.getDate("startDate")+"',end:'"+res.getDate("endDate")+"T12:30:00Z'},";
 		}
 		 result = result  + "]";
 		 result = result  + "});";

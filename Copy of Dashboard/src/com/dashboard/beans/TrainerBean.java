@@ -12,25 +12,29 @@ public class TrainerBean {
 	@Id
 	private String courseId;
 	private String trainerId;
-	private String title;
 	private int skillId;
 	private Date startDate;
 	private Date endDate;
-	private String event;
+	private String title;
+private String event;
 	public String getEvent() {
-		return event;
-	}
-	public void setEvent(String event) {
-		this.event = event;
-	}
-	public String getCourseId() {
-		return courseId;
-	}
+	return event;
+}
+public void setEvent(String event) {
+	this.event = event;
+}
 	public String getTitle() {
 		return title;
 	}
 	public void setTitle(String title) {
 		this.title = title;
+	}
+	private Date updatedOn;
+	private String updatedBy;
+	
+	
+	public String getCourseId() {
+		return courseId;
 	}
 	public void setCourseId(String courseId) {
 		this.courseId = courseId;
@@ -58,6 +62,18 @@ public class TrainerBean {
 	}
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
+	}
+	public Date getUpdatedOn() {
+		return updatedOn;
+	}
+	public void setUpdatedOn(Date updatedOn) {
+		this.updatedOn = updatedOn;
+	}
+	public String getUpdatedBy() {
+		return updatedBy;
+	}
+	public void setUpdatedBy(String updatedBy) {
+		this.updatedBy = updatedBy;
 	}
 	
 
