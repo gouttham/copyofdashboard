@@ -59,11 +59,9 @@ function aj() {
        
 function fu()
 {
-	alert("ok");
 	var eventName=document.getElementById("eventName").value;
 	var startDate=document.getElementById("startDate").value;
 	var endDate=document.getElementById("endDate").value;
-	alert(eventName);
 	doAjaxPost(eventName,startDate,endDate);
 	}
 
@@ -74,6 +72,7 @@ function fu()
 
 
 
+<input type="hidden" id="status" value="Fix Schedule"readonly="readonly">
 
 
 
@@ -105,7 +104,6 @@ function doAjaxPost(eventName,startDate,endDate){
 			function(response){
 			document.getElementById("status").value=response;
 			if(document.getElementById("status").value==="success"){
-				alert(response);
 				doSubmit();
 			}
 			
@@ -119,15 +117,14 @@ function doAjaxPost(eventName,startDate,endDate){
 	function doSubmit(){
 	  $("#createEventModal").modal('hide');
 	  alert("form submitted");   
-	  $("#calendar").fullCalendar('renderEvent',
+	 /*  $("#calendar").fullCalendar('renderEvent',
 	      {
 	          title: $('#eventName').val(),
 	          start: new Date($('#startDate').val()),
 				end: new Date($('#endDate').val()),
 				allDay:true
 	      },
-	      true);
-	  alert(" kkkk");
+	      true); */
 	      
 	 }
 </script>
