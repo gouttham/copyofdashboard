@@ -116,7 +116,8 @@ function doAjaxPost(eventName,startDate,endDate){
 		}});} 
 	function doSubmit(){
 	  $("#createEventModal").modal('hide');
-	  alert("form submitted");   
+	  alert("form submitted");  
+	  location.reload();
 	 /*  $("#calendar").fullCalendar('renderEvent',
 	      {
 	          title: $('#eventName').val(),
